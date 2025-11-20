@@ -1,0 +1,13 @@
+/* Light Theme (Default) */
+.theme-light {
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #212529;
+}
+
+.theme-light .sidebar {
+    background-color: #f8f9fa;
+}
+
+.theme-light .navbar {
+    background-color: #343a40 !important;
+}

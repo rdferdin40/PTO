@@ -1,0 +1,18 @@
+/* Dark Theme */
+.theme-dark {
+    --bs-body-bg: #1a1d20;
+    --bs-body-color: #e9ecef;
+}
+
+.theme-dark .sidebar {
+    background-color: #212529;
+}
+
+.theme-dark .sidebar .nav-link {
+    color: #adb5bd;
+}
+
+.theme-dark .card {
+    background-color: #212529;
+    color: #e9ecef;
+}
