@@ -131,4 +131,41 @@ class Leave extends Model
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$id]);
     }
+
+    public function getByUserDateRange(int $userId, string $startDate, string $endDate): array
+    {
+        $sql = "SELECT * FROM {$this->table}
+                WHERE user_id = ?
+                AND status != 'cancelled'
+                AND status != 'rejected'
+                AND (
+                    (start_date <= ? AND end_date >= ?)
+                    OR (start_date <= ? AND end_date >= ?)
+                    OR (start_date >= ? AND end_date <= ?)
+                )";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$userId, $endDate, $startDate, $startDate, $startDate, $endDate, $endDate, $startDate, $endDate]);
+        return $stmt->fetchAll();
+    }
+
+    public function findWithRelations(int $id): ?array
+    {
+        $sql = "SELECT l.*, lt.name as leave_type_name, lt.color as leave_type_color,
+                CONCAT(u.first_name, ' ', u.last_name) as user_name,
+                CONCAT(m.first_name, ' ', m.last_name) as reviewed_by_name,
+                l.manager_id as reviewed_by,
+                l.updated_at as reviewed_at
+                FROM {$this->table} l
+                LEFT JOIN leave_types lt ON l.leave_type_id = lt.id
+                LEFT JOIN users u ON l.user_id = u.id
+                LEFT JOIN users m ON l.manager_id = m.id
+                WHERE l.id = ?";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
+
+        return $result ?: null;
+    }
 }

@@ -73,10 +73,11 @@ $router->post('/password/reset/{token}', 'AuthController@resetPassword');
 $router->get('/dashboard', 'DashboardController@index');
 
 // Leave management
-$router->get('/leaves/calendar', 'LeaveController@myCalendar');
-$router->get('/leaves/request', 'LeaveController@showRequestForm');
-$router->post('/leaves/request', 'LeaveController@submitRequest');
-$router->get('/leaves/history', 'LeaveController@history');
+$router->get('/leaves', 'LeaveController@index');
+$router->get('/leaves/new', 'LeaveController@create');
+$router->post('/leaves', 'LeaveController@store');
+$router->get('/leaves/calendar', 'LeaveController@calendar');
+$router->get('/leaves/{id}', 'LeaveController@show');
 $router->post('/leaves/{id}/cancel', 'LeaveController@cancel');
 
 // Manager routes
@@ -85,58 +86,37 @@ $router->post('/manager/approvals/{id}/approve', 'ManagerController@approve');
 $router->post('/manager/approvals/{id}/reject', 'ManagerController@reject');
 $router->get('/manager/team-calendar', 'ManagerController@teamCalendar');
 
-// Admin routes
-$router->get('/admin/dashboard', 'AdminController@dashboard');
-$router->get('/admin/companies', 'AdminController@companies');
-$router->post('/admin/companies', 'AdminController@saveCompany');
-$router->post('/admin/companies/{id}/delete', 'AdminController@deleteCompany');
+// Admin routes - Users
+$router->get('/admin/users', 'AdminController@users');
+$router->get('/admin/users/new', 'AdminController@createUser');
+$router->post('/admin/users', 'AdminController@storeUser');
+$router->get('/admin/users/{id}/edit', 'AdminController@editUser');
+$router->post('/admin/users/{id}', 'AdminController@updateUser');
+$router->post('/admin/users/{id}/delete', 'AdminController@deleteUser');
 
+// Admin routes - Departments
 $router->get('/admin/departments', 'AdminController@departments');
-$router->post('/admin/departments', 'AdminController@saveDepartment');
+$router->post('/admin/departments', 'AdminController@storeDepartment');
+$router->post('/admin/departments/{id}', 'AdminController@updateDepartment');
 $router->post('/admin/departments/{id}/delete', 'AdminController@deleteDepartment');
 
-$router->get('/admin/users', 'AdminController@users');
-$router->get('/admin/users/create', 'AdminController@createUser');
-$router->post('/admin/users/create', 'AdminController@storeUser');
-$router->get('/admin/users/{id}/edit', 'AdminController@editUser');
-$router->post('/admin/users/{id}/edit', 'AdminController@updateUser');
-$router->post('/admin/users/{id}/deactivate', 'AdminController@deactivateUser');
-$router->post('/admin/users/{id}/reset-password', 'AdminController@resetUserPassword');
-
+// Admin routes - Leave Types
 $router->get('/admin/leave-types', 'AdminController@leaveTypes');
-$router->post('/admin/leave-types', 'AdminController@saveLeaveType');
+$router->post('/admin/leave-types', 'AdminController@storeLeaveType');
+$router->post('/admin/leave-types/{id}', 'AdminController@updateLeaveType');
 $router->post('/admin/leave-types/{id}/delete', 'AdminController@deleteLeaveType');
 
+// Admin routes - Holidays
 $router->get('/admin/holidays', 'AdminController@holidays');
-$router->post('/admin/holidays', 'AdminController@saveHoliday');
+$router->post('/admin/holidays', 'AdminController@storeHoliday');
+$router->post('/admin/holidays/{id}', 'AdminController@updateHoliday');
 $router->post('/admin/holidays/{id}/delete', 'AdminController@deleteHoliday');
 
-$router->get('/admin/schedules', 'AdminController@schedules');
-$router->post('/admin/schedules', 'AdminController@saveSchedule');
-$router->post('/admin/schedules/{id}/delete', 'AdminController@deleteSchedule');
-
+// Admin routes - Allowances
 $router->get('/admin/allowances', 'AdminController@allowances');
-$router->post('/admin/allowances', 'AdminController@saveAllowance');
-$router->post('/admin/allowances/import', 'AdminController@importAllowances');
+$router->post('/admin/allowances', 'AdminController@updateAllowance');
 
-$router->get('/admin/settings', 'AdminController@settings');
-$router->post('/admin/settings', 'AdminController@saveSettings');
-
-// Reports
-$router->get('/reports/leaves', 'ReportController@leavesReport');
-$router->get('/reports/leaves/export', 'ReportController@exportLeaves');
-$router->get('/reports/allowances', 'ReportController@allowancesReport');
-$router->get('/reports/allowances/export', 'ReportController@exportAllowances');
-
-// User settings
-$router->get('/settings/profile', 'SettingsController@profile');
-$router->post('/settings/profile', 'SettingsController@updateProfile');
-$router->get('/settings/preferences', 'SettingsController@preferences');
-$router->post('/settings/preferences', 'SettingsController@updatePreferences');
-$router->post('/settings/change-password', 'SettingsController@changePassword');
-
-// iCal feeds
-$router->get('/ical/user/{token}', 'IcalController@userFeed');
+// TODO: Add Reports, Settings, and iCal controllers in future updates
 
 // Dispatch
 try {

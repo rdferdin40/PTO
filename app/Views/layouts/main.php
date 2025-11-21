@@ -26,13 +26,72 @@ $theme = Helpers::getUserTheme($user ?? null, null);
                                 <i class="bi bi-house-door"></i> <?= __('dashboard') ?>
                             </a>
                         </li>
+
+                        <!-- Employee Section -->
+                        <li class="nav-item mt-3">
+                            <h6 class="sidebar-heading px-3 text-muted"><?= __('my_leave_requests') ?></h6>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/leaves') ?>">
+                                <i class="bi bi-calendar-check"></i> <?= __('my_leave_requests') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/leaves/new') ?>">
+                                <i class="bi bi-plus-circle"></i> <?= __('request_leave') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/leaves/calendar') ?>">
+                                <i class="bi bi-calendar3"></i> <?= __('my_leave_calendar') ?>
+                            </a>
+                        </li>
+
+                        <!-- Manager Section -->
+                        <?php if ($auth->isManager()): ?>
+                        <li class="nav-item mt-3">
+                            <h6 class="sidebar-heading px-3 text-muted"><?= __('manager') ?></h6>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/manager/approvals') ?>">
+                                <i class="bi bi-clipboard-check"></i> <?= __('pending_approvals') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/manager/team-calendar') ?>">
+                                <i class="bi bi-calendar3"></i> <?= __('team_calendar') ?>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+
+                        <!-- Admin Section -->
                         <?php if ($auth->isAdmin()): ?>
                         <li class="nav-item mt-3">
                             <h6 class="sidebar-heading px-3 text-muted"><?= __('admin') ?></h6>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= $app->url('/admin/users') ?>">
-                                <i class="bi bi-person"></i> <?= __('users') ?>
+                                <i class="bi bi-people"></i> <?= __('users') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/admin/departments') ?>">
+                                <i class="bi bi-building"></i> <?= __('department_management') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/admin/leave-types') ?>">
+                                <i class="bi bi-tag"></i> <?= __('leave_type_management') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/admin/holidays') ?>">
+                                <i class="bi bi-calendar-event"></i> <?= __('holiday_management') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $app->url('/admin/allowances') ?>">
+                                <i class="bi bi-calendar-range"></i> <?= __('allowance_management') ?>
                             </a>
                         </li>
                         <?php endif; ?>
